@@ -1,20 +1,21 @@
 :root{
     font-size: 3vw;
 }
+*, *::after, *::before{
+    box-sizing: border-box;
+}
 html, body {
     width: 100%;
     height: 100%;
     display: flex;
     margin: 0;
 }
-
 .page-wrapper{
     height: 100%;
     width: 100%;
     display: grid;
-    grid-template-rows: 1fr 5fr .7fr;
+    grid-template-rows: 1fr 5fr 1rem;
 }
-
 .header, .footer{
     background-color: rgb(58,   56,  56);
 }
@@ -32,12 +33,24 @@ html, body {
     flex: 1 1 100%;
     text-align: center;
 }
-
 button{
     width: 4rem;
     height: .8rem;
 }
-
 .book-body{
-    background-color:  rgb(231,119,25)
+    background-color:  rgb(231,119,25);
+    padding: 15px;
+    display: grid;
+    gap: 1vw;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 1fr;
+}
+.new-book{
+    background-color: rgb(58,   56,  56);
+    min-height: 7rem;
+    display: flex;
+    flex-wrap: wrap;
+}
+.new-book div{
+    flex-basis:100%;
 }
