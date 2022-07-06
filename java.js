@@ -56,7 +56,11 @@ function libraryEntry(){
     createBookTile();
 }
 
-const button = document.querySelector('button')
+const button = document.querySelector('[data-form-button]')
+const closeButton = document.querySelector('[data-close-button]')
+const overlay = document.getElementById('overlay')
+
 button.addEventListener('click', () =>{
-    libraryEntry()
+    const modal = document.querySelector(button.dataset.formButton)
+    console.log(modal)
 } )
