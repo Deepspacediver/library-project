@@ -61,6 +61,30 @@ const closeButton = document.querySelector('[data-close-button]')
 const overlay = document.getElementById('overlay')
 
 button.addEventListener('click', () =>{
-    const modal = document.querySelector(button.dataset.formButton)
-    console.log(modal)
+    const form = document.querySelector(button.dataset.formButton)
+    openForm(form)
 } )
+
+closeButton.addEventListener('click', ()=>{
+    const form = document.querySelector(button.dataset.formButton)
+    closeForm(form)
+})
+
+function openForm(form){
+    if (form == null)return
+    form.classList.add('active')
+    overlay.classList.add('active')
+}
+
+function closeForm(form){
+    if (form == null)return
+    form.classList.remove('active')
+    overlay.classList.remove('active')
+}
+
+overlay.addEventListener('click', ()=>{
+    const forms = document.querySelectorAll('.form-container.active')
+    forms.forEach(form => {
+        closeForm(form)
+    })
+})
