@@ -5,7 +5,7 @@ function Book(author, title, pages) {
     this.title = title
     this.pages = pages
 }
-let userAuthor;
+/* let userAuthor;
 let userTitle;
 let userPages;
 
@@ -14,7 +14,7 @@ function createBook(){
     userTitle = prompt('Enter title of the book', 'The Last Kingdom')
     userPages = prompt('Enter number of pages of the book', '200')
     
-}
+} */
 
 function addBook(){
     const userBook = new Book(userAuthor, userTitle, userPages)
@@ -25,36 +25,54 @@ const bookBody = document.querySelector('div.book-body')
 
 
 
-function createBookTile(){
-    library.forEach(element =>{
-    const newBook = document.createElement('div')
-    newBook.classList.add('new-book')
-    bookBody.appendChild(newBook)
+function createBook(){
+    // library.forEach(element =>{
+
+    const userAuthor = formAuthor.value;
+    const userTitle = formTitle.value;
+    const userPages = formPages.value;
     
-    const bookAuthor = document.createElement('div')
-    bookAuthor.classList.add('book-author')
-    newBook.appendChild(bookAuthor)
-    bookAuthor.innerText = `${element.author}`
+    const userBook = new Book(userAuthor, userTitle, userPages)
+    library.push(userBook)
+    
+    
+    const newBookDiv = document.createElement('div')
+    newBookDiv.classList.add('new-book')
+    bookBody.appendChild(newBookDiv)
+    
+    const bookAuthorDiv = document.createElement('div')
+    bookAuthorDiv.classList.add('book-author')
+    newBookDiv.appendChild(bookAuthorDiv)
+    bookAuthorDiv.innerText = `${userBook.author}`
 
-    const bookTitle = document.createElement('div')
-    bookTitle.classList.add('book-title')
-    newBook.appendChild(bookTitle)
-    bookTitle.innerText = `${element.title}`
+    const bookTitleDiv = document.createElement('div')
+    bookTitleDiv.classList.add('book-title')
+    newBookDiv.appendChild(bookTitleDiv)
+    bookTitleDiv.innerText = `${userBook.title}`
 
 
-const bookPages = document.createElement('div')
-    bookPages.classList.add('book-pages')
-    newBook.appendChild(bookPages)
-    bookPages.innerText = `${element.pages}`
-        
-    })
+const bookPagesDiv = document.createElement('div')
+    bookPagesDiv.classList.add('book-pages')
+    newBookDiv.appendChild(bookPagesDiv)
+    bookPagesDiv.innerText = `${userBook.pages}`
+    
+assignIndex(userBook, newBookDiv, bookAuthorDiv, bookTitleDiv, bookPagesDiv)        
+    // })
 }
 
-function libraryEntry(){
+function assignIndex(bookObject, bookContainer, authorDiv, titleDiv, pagesDiv){
+    let index = library.length;
+    bookObject.id = index; 
+    bookContainer.dataset.index = `${index}`;
+    authorDiv.dataset.index = `${index}`;
+    titleDiv.dataset.index = `${index}`;
+    pagesDiv.dataset.index = `${index}`;
+}
+/* function libraryEntry(){
     createBook();
     addBook();
     createBookTile();
-}
+} */
 
 const button = document.querySelector('[data-form-button]')
 const closeButton = document.querySelector('[data-close-button]')
@@ -88,3 +106,25 @@ overlay.addEventListener('click', ()=>{
         closeForm(form)
     })
 })
+
+const submitButton = document.querySelector('.submitForm')
+
+const formAuthor = document.getElementById('book-author');
+const formTitle = document.getElementById('book-title')
+const formPages = document.getElementById('book-pages')
+
+submitButton.addEventListener('click', ()=>{
+    const form = document.querySelector('.form-container.active')
+
+    closeForm(form)
+    createBook()
+    clearFormValues()
+    console.log(library)
+})
+
+function clearFormValues(){
+    formAuthor.value ='';
+    formTitle.value = '';
+    formPages.value = '';
+}
+
