@@ -4,6 +4,8 @@ function Book(author, title, pages) {
     this.author = author
     this.title = title
     this.pages = pages
+    isRead = true;
+    this.originID=Date.now()
 }
 
 function addBook(){
@@ -33,24 +35,46 @@ function createBook(bookObject){
     bookTitleDiv.innerText = `${bookObject.title}`
 
 
-const bookPagesDiv = document.createElement('div')
+    const bookPagesDiv = document.createElement('div')
     bookPagesDiv.classList.add('book-pages')
     newBookDiv.appendChild(bookPagesDiv)
     bookPagesDiv.innerText = `${bookObject.pages}`
+
+    const removeButton = document.createElement('button')
+    removeButton.classList.add('remove-button')
+    removeButton.innerText = 'Delete Book';
+    newBookDiv.appendChild(removeButton)
     
-assignIndex(bookObject, newBookDiv, bookAuthorDiv, bookTitleDiv, bookPagesDiv)        
+    assignIndex(bookObject, newBookDiv)    
+
+removeBook(removeButton)    
     
 }
 
-function assignIndex(bookObject, bookContainer, authorDiv, titleDiv, pagesDiv){
-    let index = library.length;
-    bookObject.id = index; 
-    bookContainer.dataset.index = `${index}`;
+function assignIndex(bookObject, bookContainer){
+    let bookID = bookObject.originID
+    console.log(bookID)
+    bookContainer.dataset.index = `${bookID}`;
     let containerChildren = bookContainer.children;
      for (let i = 0; i < containerChildren.length; i++) {
-    containerChildren[i].dataset.index =`${index}`
+    containerChildren[i].dataset.index =`${bookID}`
         
     }
+}
+
+let indexOfBook;
+function removeBook(removeButton){
+    removeButton.addEventListener('click', (e)=>{
+        let index = e.target.dataset.index;
+        let pageElements = document.querySelectorAll(`[data-index="${index}"]`)
+        Array.from(pageElements).forEach((element =>{
+            element.remove()
+        }))
+        indexOfBook = library.findIndex(object =>{
+            return object.originID
+        })
+    library.splice(indexOfBook, 1)
+    })
 }
 
 
@@ -99,7 +123,6 @@ submitButton.addEventListener('click', ()=>{
     closeForm(form)
     createBook(addBook())
     clearFormValues()
-    console.log(library)
 })
 
 function clearFormValues(){
