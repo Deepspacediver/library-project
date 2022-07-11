@@ -111,3 +111,12 @@ fieldset{
     border: 0px;
     
 }
+
+
+
+button.read-status{
+    background-color: red;
+}
+button.read-status.finished{
+    background-color: green;
+}
