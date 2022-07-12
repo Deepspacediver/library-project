@@ -48,9 +48,11 @@ function createBook(bookObject){
     const readStatusButton = document.createElement('button')
     readStatusButton.classList.add('read-status')
     newBookDiv.appendChild(readStatusButton)
+    
     checkReadStatus(bookObject, readStatusButton)
+    changeReadstatus(bookObject, readStatusButton)
     assignIndex(bookObject, newBookDiv)  
-removeBook(removeButton)    
+    removeBook(removeButton)    
     
 }
 
@@ -67,15 +69,30 @@ function checkReadStatus(bookObject, button){
     console.log(bookObject.isRead)
     if (bookObject.isRead === true) {
         button.classList.add('finished');
-    }return;
+    }else if(bookObject.isRead === false){
+        button.classList.remove('finished')
+    }
 }
 
-function changeReadstatus(){
-
+function changeReadstatus(bookObject, button){
+    button.addEventListener('click', (e) =>{
+        let bookID = Number(e.target.dataset.index);
+        
+        let bookIndex = library.findIndex(book => book.originID === bookID)
+        console.log(library[bookIndex])
+        if(library[bookIndex].isRead === true){
+            library[bookIndex].isRead = false
+            checkReadStatus(library[bookIndex], button)
+        }else if(library[bookIndex].isRead === false){
+            library[bookIndex].isRead = true
+            checkReadStatus(library[bookIndex], button)
+        }
+        
+    })
 }
 
 
-let indexOfBook;
+
 function removeBook(removeButton){
     removeButton.addEventListener('click', (e)=>{
         let index = e.target.dataset.index;
@@ -83,7 +100,7 @@ function removeBook(removeButton){
         Array.from(pageElements).forEach((element =>{
             element.remove()
         }))
-        indexOfBook = library.findIndex(object =>{
+        let indexOfBook = library.findIndex(object =>{
             return object.originID
         })
     library.splice(indexOfBook, 1)
