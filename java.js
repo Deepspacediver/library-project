@@ -8,6 +8,16 @@ function Book(author, title, pages, isRead) {
     this.originID=Date.now()
 }
 
+class Book {
+    constructor(author, title, pages, isRead){
+        this.author = author
+        this.title = title
+        this.pages = pages
+        this.isRead = isRead;
+        this.originID=Date.now()
+    }
+}
+
 function addBook(){
     const userBook = new Book(formAuthor.value, formTitle.value, formPages.value, formRead.checked)
     library.push(userBook)
@@ -36,7 +46,7 @@ function createBook(bookObject){
     const bookPagesDiv = document.createElement('div')
     bookPagesDiv.classList.add('book-pages')
     newBookDiv.appendChild(bookPagesDiv)
-    bookPagesDiv.innerText = `${bookObject.pages} pages`
+    bookPagesDiv.innerText = `${bookObject.pages} pages `
 
     const removeButton = document.createElement('button')
     removeButton.classList.add('remove-button')
@@ -64,6 +74,7 @@ function assignIndex(bookObject, bookContainer){
     }
 }
 function checkReadStatus(bookObject, button){
+    console.log(bookObject.isRead)
     if (bookObject.isRead === true) {
         button.classList.add('finished');
     }else if(bookObject.isRead === false){
@@ -76,6 +87,7 @@ function changeReadstatus(bookObject, button){
         let bookID = Number(e.target.dataset.index);
         
         let bookIndex = library.findIndex(book => book.originID === bookID)
+        console.log(library[bookIndex])
         if(library[bookIndex].isRead === true){
             library[bookIndex].isRead = false
             checkReadStatus(library[bookIndex], button)
