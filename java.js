@@ -1,12 +1,6 @@
 let library = [];
 
-function Book(author, title, pages, isRead) {
-    this.author = author
-    this.title = title
-    this.pages = pages
-    this.isRead= isRead;
-    this.originID=Date.now()
-}
+
 
 class Book {
     constructor(author, title, pages, isRead){
@@ -17,7 +11,6 @@ class Book {
         this.originID=Date.now()
     }
 }
-
 function addBook(){
     const userBook = new Book(formAuthor.value, formTitle.value, formPages.value, formRead.checked)
     library.push(userBook)
